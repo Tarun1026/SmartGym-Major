@@ -1,0 +1,101 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    background-color:#f7f7f7;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    overflow: hidden; /* Prevents scroll bar */
+}
+
+.leftDiv {
+    width: 50%;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box; /* Ensure padding and border are included in the width and height */
+}
+
+.bgImage {
+    width: 100%;
+    height: 100%; /* Ensures the image fully fills the left div */
+    object-fit: cover; /* Maintains the aspect ratio while covering the entire area */
+}
+
+.rightDiv {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Aligns the content towards the top */
+    /* padding-top: 5rem;  */
+}
+
+.containerRightDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the content horizontally within the rightDiv */
+}
+
+.mainHeading {
+    margin-bottom: 2rem;
+}
+
+.heading {
+    margin-top: 1rem;
+}
+
+.inputField {
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 20rem;
+    height: 2.5rem;
+    padding-left: 10px;
+}
+
+.rememberMe {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: lighter;
+    color: #727171;
+    display: flex;
+    align-items: center;
+}
+.rem{
+    margin-top: 6px;
+}
+
+.signupLink {
+    font-size: large;
+    margin-top: 1rem;
+    margin-left: 2px;
+}
+
+.signupLinkColour {
+    color: blue;
+    margin-left: 10px;
+}
+.signupLinkColour:hover{
+    color: rgb(72, 160, 255);
+}
+.loginBtn {
+    margin-top: 2rem;
+}
+
+.btn {
+    width: 25.6em;
+    height: 2.7rem;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(80, 190, 233);
+    color: white;
+}
+.btn:hover{
+    background-color: rgb(100, 131, 244);
+    /* color: blue; */
+}
