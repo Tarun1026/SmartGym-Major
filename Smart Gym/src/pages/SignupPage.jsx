@@ -9,10 +9,10 @@ const SignupPage=() =>{
   const[email,setEmail]=useState()
   const [password,setPassword]=useState()
   const[confirmPassword,setConfirmPassword]=useState()
-  const handleSubmit=(e)=>{
+  const handleSubmit=async(e)=>{
     e.preventDefault()
     if (password==confirmPassword) {
-      axios.post("/api/v1/users/register",{fullName,email,password,confirmPassword})
+      await axios.post("/api/v1/users/register",{fullName,email,password,confirmPassword})
       .then((result)=>console.log(result))
       .catch(err=>console.log(err))
     } else {
