@@ -96,6 +96,7 @@ const loginUser=asyncHandler(async(req,res)=>{
          200,
          {
             user:accessToken,refreshToken,loggedIn
+            
          },
          "User Login Successfully"
       )

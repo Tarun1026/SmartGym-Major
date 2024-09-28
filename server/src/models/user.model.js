@@ -23,6 +23,10 @@ const userSchema=new Schema({
         type:String,
         
     },
+    exerciseRecommendation: {
+        type: Object,
+        default: {}
+    },
     // accessToken:{
     //     type:String,
         
