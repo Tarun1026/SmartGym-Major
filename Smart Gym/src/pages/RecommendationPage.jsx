@@ -1,10 +1,51 @@
-import React from "react";
+import  { useState } from "react";
 import "../css/RecommendationPage.css";
 
 function RecommendationPage() {
+  const [gender, setGender] = useState("");
+  const [weightKg, setWeightKg] = useState(0);
+  const [weightG, setWeightG] = useState(0);
+  const [heightFeet, setHeightFeet] = useState(0);
+  const [heightInches, setHeightInches] = useState(0);
+  const [fitnessLevel, setFitnessLevel] = useState("");
+  const [fitnessGoal, setFitnessGoal] = useState("");
+
+  // Calculate total weight in kg
+  const totalWeight = weightKg + weightG / 1000;
+
+  // Calculate height in meters
+  const totalHeight = (heightFeet * 0.3048) + (heightInches * 0.0254);
+
+  // Calculate BMI
+  const bmi = totalHeight > 0 ? totalWeight / (totalHeight * totalHeight) : 0;
+
+  const handleSubmit = async () => {
+    const data = {
+      bmi,
+      fitnessLevel,
+      fitnessGoal,
+    };
+    console.log(fitnessGoal,fitnessLevel,bmi);
+    try {
+      const response = await fetch("http://localhost:5000/api/scriptpy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log("Recommended Plan:", result);
+
+      // Handle success, display result to the user, or redirect to a different page
+    } catch (error) {
+      console.error("Error fetching recommendation:", error);
+    }
+  };
+
   return (
     <div className="container">
-        
       <div className="form">
         <h2 className="heading">Get Started</h2>
         <div className="description">
@@ -12,8 +53,13 @@ function RecommendationPage() {
         </div>
         <div className="form-group">
           <label htmlFor="gender">Gender</label>
-          <select id="gender" className="select-field">
-            <option value="" disabled selected>
+          <select
+            id="gender"
+            className="select-field"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+          >
+            <option value="" disabled>
               Select Gender
             </option>
             <option value="male">Male</option>
@@ -30,6 +76,8 @@ function RecommendationPage() {
               className="input-field weight-input"
               placeholder="Kg"
               min="0"
+              value={weightKg}
+              onChange={(e) => setWeightKg(e.target.value)}
             />
             <input
               id="weight-g"
@@ -37,22 +85,34 @@ function RecommendationPage() {
               className="input-field weight-input"
               placeholder="Grams"
               min="0"
+              value={weightG}
+              onChange={(e) => setWeightG(e.target.value)}
             />
           </div>
         </div>
         <div className="form-group">
           <label htmlFor="height">Height</label>
           <div className="height-select">
-            <select id="feet" className="select-field">
-              <option value="" disabled selected>
+            <select
+              id="feet"
+              className="select-field"
+              value={heightFeet}
+              onChange={(e) => setHeightFeet(e.target.value)}
+            >
+              <option value="" disabled>
                 Feet
               </option>
               {[...Array(10).keys()].map(i => (
                 <option key={i} value={i + 1}>{i + 1} ft</option>
               ))}
             </select>
-            <select id="inches" className="select-field">
-              <option value="" disabled selected>
+            <select
+              id="inches"
+              className="select-field"
+              value={heightInches}
+              onChange={(e) => setHeightInches(e.target.value)}
+            >
+              <option value="" disabled>
                 Inches
               </option>
               {[...Array(12).keys()].map(i => (
@@ -63,35 +123,37 @@ function RecommendationPage() {
         </div>
         <div className="form-group">
           <label htmlFor="fitness-level">Fitness Level</label>
-          <select id="fitness-level" className="select-field">
-            <option value="" disabled selected>
+          <select
+            id="fitness-level"
+            className="select-field"
+            value={fitnessLevel}
+            onChange={(e) => setFitnessLevel(e.target.value)}
+          >
+            <option value="" disabled>
               Select Fitness Level
             </option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
           </select>
         </div>
         <div className="form-group">
           <label htmlFor="fitness-goal">Fitness Goal</label>
-          <select id="fitness-goal" className="select-field">
-            <option value="muscle-build">Muscle Build</option>
-            <option value="increase-strength">Increase Strength</option>
-            <option value="improve-endurance">Improve Endurance</option>
-            <option value="fat-loss">Fat Loss</option>
+          <select
+            id="fitness-goal"
+            className="select-field"
+            value={fitnessGoal}
+            onChange={(e) => setFitnessGoal(e.target.value)}
+          >
+            <option value="Muscle Gain">Muscle Gain</option>
+            
+            <option value="Bicep Gain">Bicep Gain</option>
+            <option value="Fat Loss">Fat Loss</option>
           </select>
         </div>
-        <div className="form-group">
-          <label htmlFor="muscles-per-day">How many muscles you can do per day?</label>
-          <select id="muscles-per-day" className="select-field">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="full-body">Full Body Workout</option>
-          </select>
-        </div>
+        
         <div className="button-container">
-          <button className="submit-button">Get Plan</button>
+          <button className="submit-button" onClick={handleSubmit}>Get Plan</button>
         </div>
       </div>
     </div>

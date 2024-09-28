@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "../css/SignupPage.css";
 import backGroundImage from "../assets/BodyBuilderImage.jpg";
 import { Link } from "react-router-dom";

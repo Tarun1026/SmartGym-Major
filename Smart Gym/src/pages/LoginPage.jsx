@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Link } from 'react-router-dom';
 import "../css/LoginPage.css"; // Create and link a CSS file for styling
+
 import backGroundImage from "../assets/BodyBuilderImage.jpg"
 import axios from 'axios';
 const LoginPage=() =>{
