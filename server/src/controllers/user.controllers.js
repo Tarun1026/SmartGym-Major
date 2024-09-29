@@ -103,4 +103,82 @@ const loginUser=asyncHandler(async(req,res)=>{
    )
 
 })
-export {userRegister,loginUser,generateAccessAndRefreshToken}
+
+const logOutUser=asyncHandler(async(req,res)=>{
+   await User.findByIdAndUpdate(
+      req.user._id,
+      {
+         $set:{
+            refreshToken:undefined
+         }
+      },
+      {
+         new:true
+      }
+   )
+   const options={
+      httpOnly:true,
+      secure:true
+   }
+
+   return res
+   .status(200)
+   .clearCookie("accessToken",options)
+   .clearCookie("refreshToken",options)
+   .json(
+      new ApiResponse(200,{},"User logOut Successfully")
+   )
+})
+
+const refreshAccessToken=asyncHandler(async(req,res)=>{
+   try {
+       const incomingRefreshToken=req.cookies.refreshToken || 
+       req.body.refreshToken
+   
+       if(!incomingRefreshToken){
+           throw new ApiError(401,"Invalid IncomingRefresh Token")
+       }
+   
+       const decodedToken=jwt.verify(
+           incomingRefreshToken,
+           process.env.REFRESH_TOKEN_SECRET
+       )
+   
+       const user= await User.findById(decodedToken?._id)
+       if(!user){
+           throw new ApiError(401,"Unauthorized Token Access")
+       }
+   
+       if(incomingRefreshToken!==user?.refreshToken){
+           throw new ApiError(400,"Refresh Token Not Matched")
+       }
+   
+       const options={
+           httpOnly:true,
+           secure:true
+       }
+   
+       const{accessToken,newRefreshToken}=await generateAccessAndRefreshToken(user._id)
+   
+       return res
+       .status(200)
+       .cookie("accessToken",accessToken,options)
+       .cookie("refreshToken",newRefreshToken,options)
+       .json(
+           new ApiResponse(
+               200,{
+                   accessToken,refreshToken:newRefreshToken
+               },
+               "Access Token Refreshed"
+               
+           )
+       )
+   } catch (error) {
+       throw new ApiError(400,error?.message||"Invalid Token access")
+   }
+})
+export {userRegister,
+       loginUser,
+       logOutUser,
+       generateAccessAndRefreshToken,
+       refreshAccessToken}
