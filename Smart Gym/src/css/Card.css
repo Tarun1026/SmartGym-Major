@@ -1,0 +1,14 @@
+.card{
+    height: 20vh;
+    width:35vw;
+    border: 2px solid black;
+    border-radius: 14px;
+    margin-left: 20px;
+    background-color: white;
+    margin: 30px;
+    overflow: hidden;
+}
+
+.subTitle{
+    color: white;
+}
