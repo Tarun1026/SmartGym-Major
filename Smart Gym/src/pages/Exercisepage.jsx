@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -90,7 +91,6 @@ const Exercise = () => {
         </button>
       </form>
     </div>
-  );
-};
+  )}  
 
 export default Exercise;
