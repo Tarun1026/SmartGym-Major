@@ -1,77 +1,96 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
-const ExercisePage = () => {
-  const [isExercising, setIsExercising] = useState(false);
-  const [status, setStatus] = useState('');
+const Exercise = () => {
+  const [selectedExercise, setSelectedExercise] = useState('');
 
-  // Function to start the exercise
-  const startExercise = () => {
-    fetch('http://localhost:5000/start-exercise', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ exercise: 'pushup', count: 10 }) // Exercise is 'pushup', count is 10
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsExercising(true);  // Set state to indicate that exercise has started
-        setStatus('Pushup exercise started!');
-      })
-      .catch((error) => {
-        console.error('Error starting exercise:', error);
-        setStatus('Error starting exercise');
-      });
+  const handleExerciseChange = (event) => {
+    setSelectedExercise(event.target.value);
   };
 
-  // Function to skip the exercise
-  const skipExercise = () => {
-    fetch('/skip-exercise', { method: 'POST' })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsExercising(false); // Set state to indicate that exercise has stopped
-        setStatus('Exercise skipped!');
-      })
-      .catch((error) => {
-        console.error('Error skipping exercise:', error);
-        setStatus('Error skipping exercise');
-      });
+  const handleStartExercise = async () => {
+    if (selectedExercise) {
+      try {
+        // Send a POST request to the Flask server with the selected exercise
+        await axios.post('http://127.0.0.1:5000/', { choice: selectedExercise, count:10});
+        // Redirect to the Flask server page (or handle this on the frontend if needed)
+        window.location.href = 'http://127.0.0.1:5000';
+      } catch (error) {
+        console.error('Error starting exercise:', error);
+      }
+    }
   };
 
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h1>Smart Gym Exercise</h1>
-
-      {/* Start Exercise Button */}
-      {!isExercising && (
-        <button onClick={startExercise} style={buttonStyle}>
-          Start Pushup Exercise (10 Reps)
+    <div>
+      <h1>Select an Exercise</h1>
+      <form>
+        <div>
+          <input
+            type="radio"
+            id="pushup"
+            name="exercise"
+            value="1"
+            onChange={handleExerciseChange}
+          />
+          <label htmlFor="pushup">Pushup</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="bicep"
+            name="exercise"
+            value="2"
+            onChange={handleExerciseChange}
+          />
+          <label htmlFor="bicep">Bicep Curl</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="plank"
+            name="exercise"
+            value="3"
+            onChange={handleExerciseChange}
+          />
+          <label htmlFor="plank">Plank</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="tree"
+            name="exercise"
+            value="4"
+            onChange={handleExerciseChange}
+          />
+          <label htmlFor="tree">Tree Pose</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="tpose"
+            name="exercise"
+            value="5"
+            onChange={handleExerciseChange}
+          />
+          <label htmlFor="tpose">T Pose</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id="warrior"
+            name="exercise"
+            value="6"
+            onChange={handleExerciseChange}
+          />
+          <label htmlFor="warrior">Warrior Pose</label>
+        </div>
+        <button type="button" onClick={handleStartExercise}>
+          Start Exercise
         </button>
-      )}
-
-      {/* Skip Exercise Button */}
-      {isExercising && (
-        <button onClick={skipExercise} style={buttonStyle}>
-          Skip Exercise
-        </button>
-      )}
-
-      {/* Display Status */}
-      <div style={{ marginTop: '20px', fontSize: '18px', color: 'green' }}>
-        {status}
-      </div>
+      </form>
     </div>
   );
 };
 
-// Styling for buttons
-const buttonStyle = {
-  padding: '10px 20px',
-  fontSize: '16px',
-  cursor: 'pointer',
-  margin: '10px',
-  backgroundColor: '#007BFF',
-  color: 'white',
-  border: 'none',
-  borderRadius: '5px',
-};
-
-export default ExercisePage;
+export default Exercise;

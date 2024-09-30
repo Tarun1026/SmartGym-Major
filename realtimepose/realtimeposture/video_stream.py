@@ -1,3 +1,4 @@
+
 import cv2
 from flask import Response
 from angle_calculator import AngleCalculator
@@ -10,23 +11,20 @@ from tpose_classifier import TposeClassifier
 from warrior_classifier import WarriorClassifier
 
 class VideoStream:
-    def __init__(self):
-        print("inside videostream")
+    def __init__(self,count=10):
         self.cap = cv2.VideoCapture(0)
-        if not self.cap.isOpened():
-            print("Error: Could not open video device.")
-        # self.pushup_classifier = PushupClassifier()
-        # self.bicep_classifier = BicepClassifier()
-        # self.pose_detector = PoseDetector()
-        # self.plank_classifier = PlankClassifier()
-        # self.tree_classifier = TreeClassifier()
-        # self.tpose_classifier = TposeClassifier()
-        # self.warrior_classifier =WarriorClassifier()
+        self.pushup_classifier = PushupClassifier()
+        self.bicep_classifier = BicepClassifier(count)
+        self.pose_detector = PoseDetector()
+        self.plank_classifier = PlankClassifier()
+        self.tree_classifier = TreeClassifier()
+        self.tpose_classifier = TposeClassifier()
+        self.warrior_classifier =WarriorClassifier()
         self.classifier = None
 
-    def set_classifier(self, choice,target_count=10):
+    def set_classifier(self, choice,count):
         if choice == 'pushup':
-            self.classifier = self.pushup_classifier(target_count)
+            self.classifier = self.pushup_classifier
         elif choice == 'bicep':
             self.classifier = self.bicep_classifier
         elif choice == 'plank':
