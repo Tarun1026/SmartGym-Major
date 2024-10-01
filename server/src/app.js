@@ -17,31 +17,6 @@ app.post('/api/scriptpy', scriptpyHandler);
 import { spawn } from 'child_process';
 let exerciseProcess = null;
 
-app.post('/start-exercise', (req, res) => {
-  const { exercise, count } = req.body;
-
-  // Spawn the Python process to start real-time detection
-  exerciseProcess = spawn('python', ['D:/smartgym/SmartGym-Major/realtimepose/realtimeposture/app.py', exercise, count]);
-
-  exerciseProcess.stdout.on('data', (data) => {
-    console.log(`Python process output: ${data}`);
-  });
-
-  exerciseProcess.on('close', (code) => {
-    console.log(`Python process exited with code: ${code}`);
-  });
-
-  res.json({ message: 'Exercise started' });
-});
-
-app.post('/skip-exercise', (req, res) => {
-  if (exerciseProcess) {
-    exerciseProcess.kill();
-    res.json({ message: 'Exercise skipped' });
-  } else {
-    res.json({ message: 'No active exercise process' });
-  }
-});
 
 import userRouter from "./routes/user.routes.js"
 app.use("/api/v1/users",userRouter)

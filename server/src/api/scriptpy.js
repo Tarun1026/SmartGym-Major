@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js"; // Import the user model
 import { spawn } from 'child_process';
+// import verifyJWT from '../middleware/verifyJWT.js';
 
 export default async function handler(req, res) {
   // console.log("heello");
@@ -34,12 +35,14 @@ export default async function handler(req, res) {
       console.log(`Python script exited with code ${code}`);
       if (code === 0) {
         try {
-          const userId = "66f7f0157360b5a20f5783d4"; // Replace with actual user ID
+          const userId = "66fae0059f22fed12b7050ff"
           const user = await User.findById(userId);
-
+          
           if (user) {
             // Parse the received data as JSON
-            user.exerciseRecommendation = JSON.parse(exerciseData);
+            let parsed=JSON.parse(exerciseData)
+            // console.log("aprsed",parsed)
+            user.exerciseRecommendation = parsed;
             await user.save({ validateBeforeSave: false });
             res.status(200).json({ message: 'Exercise recommendations stored successfully!' });
           } else {

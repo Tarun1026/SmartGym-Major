@@ -19,14 +19,16 @@ function RecommendationPage() {
   // Calculate BMI
   const bmi = totalHeight > 0 ? totalWeight / (totalHeight * totalHeight) : 0;
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     const data = {
       bmi,
       fitnessLevel,
       fitnessGoal,
     };
     console.log(fitnessGoal,fitnessLevel,bmi);
+    e.preventDefault();
     try {
+      
       const response = await fetch("http://localhost:5000/api/scriptpy", {
         method: "POST",
         headers: {

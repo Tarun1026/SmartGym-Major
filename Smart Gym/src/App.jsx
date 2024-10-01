@@ -4,7 +4,7 @@ import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import './App.css';
 import RecommendationPage from './pages/RecommendationPage';
-import ExercisePage from './pages/exercisepage';
+import PersonDayExercise from './pages/PersonDayExercise';
 function App() {
   return (
     <Router>
@@ -13,7 +13,9 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/recommend" element={<RecommendationPage />} />
-        <Route path="/exercise" element={<ExercisePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/person-exercise" element={<PersonDayExercise />} />
+        
       </Routes>
     </Router>
   );

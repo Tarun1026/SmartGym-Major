@@ -177,8 +177,32 @@ const refreshAccessToken=asyncHandler(async(req,res)=>{
        throw new ApiError(400,error?.message||"Invalid Token access")
    }
 })
+
+const updateRecommendExercises=asyncHandler(async(req,res)=>{
+   console.log("body",req.body)
+   const user=await User.findById(req.user._id)
+    if(!user){
+      throw new ApiError(401,"user not found")
+    }
+
+    if(exerciseData==""){
+      throw new ApiError(400,"User exercise not found")
+    }
+
+    user.exerciseRecommendation=exerciseData
+    await user.save({ validateBeforeSave: false });
+
+    return res
+    .status(200)
+    .json(
+      new ApiResponse(
+         200,user,"Recommend Exercise Submit Successfully"
+      )
+    )
+})
 export {userRegister,
        loginUser,
        logOutUser,
        generateAccessAndRefreshToken,
-       refreshAccessToken}
+       refreshAccessToken,
+       updateRecommendExercises}
