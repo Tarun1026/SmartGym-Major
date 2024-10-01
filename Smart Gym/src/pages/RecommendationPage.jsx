@@ -1,5 +1,6 @@
 import  { useState } from "react";
 import "../css/RecommendationPage.css";
+import { useNavigate } from "react-router-dom";
 
 function RecommendationPage() {
   const [gender, setGender] = useState("");
@@ -9,14 +10,12 @@ function RecommendationPage() {
   const [heightInches, setHeightInches] = useState(0);
   const [fitnessLevel, setFitnessLevel] = useState("");
   const [fitnessGoal, setFitnessGoal] = useState("");
+  const navigate=useNavigate()
 
-  // Calculate total weight in kg
   const totalWeight = weightKg + weightG / 1000;
 
-  // Calculate height in meters
   const totalHeight = (heightFeet * 0.3048) + (heightInches * 0.0254);
 
-  // Calculate BMI
   const bmi = totalHeight > 0 ? totalWeight / (totalHeight * totalHeight) : 0;
 
   const handleSubmit = async () => {
@@ -37,15 +36,14 @@ function RecommendationPage() {
 
       const result = await response.json();
       console.log("Recommended Plan:", result);
-
-      // Handle success, display result to the user, or redirect to a different page
+      navigate('/dashboard')
     } catch (error) {
       console.error("Error fetching recommendation:", error);
     }
   };
 
   return (
-    <div className="container">
+    <div className="container1">
       <div className="form">
         <h2 className="heading">Get Started</h2>
         <div className="description">

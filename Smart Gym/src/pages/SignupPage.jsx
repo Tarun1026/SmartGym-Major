@@ -3,17 +3,20 @@ import "../css/SignupPage.css";
 import backGroundImage from "../assets/BodyBuilderImage.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 const SignupPage=() =>{
 
   const [fullName,setFullName]=useState()
   const[email,setEmail]=useState()
   const [password,setPassword]=useState()
   const[confirmPassword,setConfirmPassword]=useState()
+  const navigate=useNavigate()
   const handleSubmit=async(e)=>{
     e.preventDefault()
     if (password==confirmPassword) {
       await axios.post("/api/v1/users/register",{fullName,email,password,confirmPassword})
       .then((result)=>console.log(result))
+       navigate('/login')
       .catch(err=>console.log(err))
     } else {
       console.log("create and confirm password should be same")

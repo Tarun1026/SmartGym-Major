@@ -47,9 +47,10 @@ import cv2
 from angle_calculator import AngleCalculator
 
 class PushupClassifier:
-    def __init__(self):
+    def __init__(self,count):
         self.prev_state = None
         self.pushup_count = 0
+        self.target_count = count
 
     def classify(self, landmarks, prev_state, output_image):
         label = ''
@@ -80,5 +81,7 @@ class PushupClassifier:
                         label = 'up'
 
         cv2.putText(output_image, f'Pushups: {self.pushup_count}', (10, 60), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
+        if self.pushup_count >= self.target_count:
+            cv2.putText(output_image, 'pushup Done!', (10, 100), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
 
         return output_image, label, prev_state

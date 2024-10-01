@@ -1,14 +1,19 @@
 import mediapipe as mp
 import cv2
+import time 
 from angle_calculator import AngleCalculator
 
 
 class PlankClassifier:
-    def __init__(self):
+    def __init__(self,count):
         self.prev_state = None
+        self.target_count = count  # Target seconds to hold the pose
+        self.start_time = None  # To track when the pose is held correctly
+        self.plank_held_seconds = 0  
 
     def classify(self, landmarks, prev_state, output_image):
         label = 'Unknown Pose'
+        is_plank_correct = False
         if landmarks:
             left_elbow_angle = AngleCalculator().calculate_angle(landmarks[mp.solutions.pose.PoseLandmark.LEFT_SHOULDER.value],
                                                                  landmarks[mp.solutions.pose.PoseLandmark.LEFT_ELBOW.value],
@@ -42,6 +47,25 @@ class PlankClassifier:
                     if left_knee_angle > 180 and right_knee_angle > 180:
 
                         label = 'Plank Pose'
+                        is_plank_correct = True
+        if is_plank_correct:
+            # Start timing if plank pose is correct
+            if self.start_time is None:
+                self.start_time = time.time()  # Start the timer
+            else:
+                self.plank_held_seconds = time.time() - self.start_time  # Calculate the time held
+                
+            # Display the current time held on the screen
+            cv2.putText(output_image, f'Time Held: {self.plank_held_seconds:.1f} sec', 
+                        (10, 100), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
+            
+            # Check if the user held the plank pose for the target time
+            if self.plank_held_seconds >= self.target_count:
+                cv2.putText(output_image, 'plank Pose Done!', (10, 140), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
+        else:
+            # Reset timer if plank pose is not correct
+            self.start_time = None
+            self.plank_held_seconds = 0
 
         cv2.putText(output_image, label, (10, 60),
                     cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)

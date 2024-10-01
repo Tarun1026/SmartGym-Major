@@ -11,30 +11,30 @@ from tpose_classifier import TposeClassifier
 from warrior_classifier import WarriorClassifier
 
 class VideoStream:
-    def __init__(self,count=10):
+    def __init__(self):
         self.cap = cv2.VideoCapture(0)
-        self.pushup_classifier = PushupClassifier()
-        self.bicep_classifier = BicepClassifier(count)
+        # self.pushup_classifier = PushupClassifier()
+        # self.bicep_classifier = BicepClassifier()
         self.pose_detector = PoseDetector()
-        self.plank_classifier = PlankClassifier()
-        self.tree_classifier = TreeClassifier()
-        self.tpose_classifier = TposeClassifier()
-        self.warrior_classifier =WarriorClassifier()
+        # self.plank_classifier = PlankClassifier()
+        # self.tree_classifier = TreeClassifier()
+        # self.tpose_classifier = TposeClassifier()
+        # self.warrior_classifier =WarriorClassifier()
         self.classifier = None
 
     def set_classifier(self, choice,count):
         if choice == 'pushup':
-            self.classifier = self.pushup_classifier
+            self.classifier = PushupClassifier(count)
         elif choice == 'bicep':
-            self.classifier = self.bicep_classifier
+            self.classifier = BicepClassifier(count)
         elif choice == 'plank':
-            self.classifier = self.plank_classifier
+            self.classifier = PlankClassifier(count)
         elif choice == 'Tree':
-            self.classifier = self.tree_classifier
+            self.classifier = TreeClassifier(count)
         elif choice == 'TPose':
-            self.classifier = self.tpose_classifier
+            self.classifier = TposeClassifier(count)
         elif choice == 'WarriorPose':
-            self.classifier = self.warrior_classifier
+            self.classifier = WarriorClassifier(count)
 
     def stream(self):
         def generate_frames():
