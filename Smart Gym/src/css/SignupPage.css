@@ -33,9 +33,11 @@ html, body {
     justify-content: center;
     align-items: flex-start; /* Aligns the content towards the top */
     /* padding-top: 5rem;  */
+    margin-top:1rem;
 }
 
 .containerRightDiv {
+    
     display: flex;
 }
 

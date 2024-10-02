@@ -179,19 +179,26 @@ const refreshAccessToken=asyncHandler(async(req,res)=>{
 })
 
 const updateRecommendExercises=asyncHandler(async(req,res)=>{
+   
+   const {result}=req.body
    console.log("body",req.body)
+   console.log("id",req.user._id)
+   console.log("res",result)
    const user=await User.findById(req.user._id)
     if(!user){
       throw new ApiError(401,"user not found")
     }
 
-    if(exerciseData==""){
-      throw new ApiError(400,"User exercise not found")
-    }
+    if (!result) {
+      throw new ApiError(400, "User exercise not found");
+  }
 
-    user.exerciseRecommendation=exerciseData
-    await user.save({ validateBeforeSave: false });
-
+  console.log("Before update:", user.exerciseRecommendation);
+  user.exerciseRecommendation = result;
+  await user.save({ validateBeforeSave: false });
+  console.log("After update:", user.exerciseRecommendation);
+  
+    console.log("user",user)
     return res
     .status(200)
     .json(

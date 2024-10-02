@@ -35,19 +35,21 @@ export default async function handler(req, res) {
       console.log(`Python script exited with code ${code}`);
       if (code === 0) {
         try {
-          const userId = "66fae0059f22fed12b7050ff"
-          const user = await User.findById(userId);
+          // await axios.post()
+          // console.log("req",req.body)
+          // const userId = "66fae0059f22fed12b7050ff"
+          // const user = await User.findById(userId);
           
-          if (user) {
+          // if (user) {
             // Parse the received data as JSON
             let parsed=JSON.parse(exerciseData)
             // console.log("aprsed",parsed)
-            user.exerciseRecommendation = parsed;
-            await user.save({ validateBeforeSave: false });
-            res.status(200).json({ message: 'Exercise recommendations stored successfully!' });
-          } else {
-            res.status(404).json({ error: 'User not found' });
-          }
+            // user.exerciseRecommendation = parsed;
+            // await user.save({ validateBeforeSave: false });
+            res.status(200).json(parsed);
+          // } else {
+          //   res.status(404).json({ error: 'User not found' });
+          // }
         } catch (error) {
           console.error(error);
           res.status(500).json({ error: 'Error saving exercise recommendations' });

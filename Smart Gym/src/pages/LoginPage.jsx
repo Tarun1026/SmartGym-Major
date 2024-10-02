@@ -1,5 +1,6 @@
 import  { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "../css/LoginPage.css"; // Create and link a CSS file for styling
 
 import backGroundImage from "../assets/BodyBuilderImage.jpg"
@@ -8,11 +9,12 @@ const LoginPage=() =>{
 
   const[email,setEmail]=useState()
   const [password,setPassword]=useState()
-
+  const navigate=useNavigate()
   const handleSubmit=async(e)=>{
     e.preventDefault()
     await axios.post("/api/v1/users/logins",{email,password})
     .then((res)=>console.log(res))
+    navigate('/recommend')
     .catch(err=>console.log(err))
   }
   return (

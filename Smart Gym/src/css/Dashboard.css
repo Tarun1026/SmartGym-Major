@@ -1,0 +1,52 @@
+.header{
+    /* margin-top: 10rem; */
+    display: flex;
+    flex-direction: row;
+    padding: 3px;
+    height: 10vh;
+    width: 100%;
+    align-items: center;
+    background-color: rgb(34, 119, 255);
+
+}
+.logo{
+    width: 5vw;
+    height: 6vh;
+    border-radius: 50%;
+    margin-right: 10px;
+
+}
+.avatar{
+    padding: 20px;
+    margin-right: 10px;
+}
+.brand{
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-left: 10px;
+}
+.container{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+}
+.line {
+    width: 2px;
+    background-color: gray;
+    margin: 0 10px;
+    height: 110vh;
+  }
+
+  .left-section {
+    flex: 0.65;
+    padding: 20px;
+  }
+  
+  .right-section {
+    flex: 0.5;
+
+    padding: 20px;
+  }
