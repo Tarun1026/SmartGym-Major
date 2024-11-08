@@ -9,6 +9,7 @@ import PersonDayExercise from './pages/PersonDayExercise';
 
 import Dashboard from "./pages/Dashboard"
 import ExercisePage from './pages/exercisepage';
+import RecommendedPage from './pages/RecommendedPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/recommend" element={<RecommendationPage />} />
+        <Route path="/get-recommend" element={<RecommendedPage/>}/>
 
         <Route path="/person-exercise" element={<PersonDayExercise />} />
         

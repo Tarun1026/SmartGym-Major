@@ -51,6 +51,7 @@ class PushupClassifier:
         self.prev_state = None
         self.pushup_count = 0
         self.target_count = count
+        
 
     def classify(self, landmarks, prev_state, output_image):
         label = ''
@@ -84,4 +85,4 @@ class PushupClassifier:
         if self.pushup_count >= self.target_count:
             cv2.putText(output_image, 'pushup Done!', (10, 100), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
 
-        return output_image, label, prev_state
+        return output_image, label, prev_state,self.pushup_count

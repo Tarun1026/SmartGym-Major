@@ -11,7 +11,7 @@ selected_exercise = None
 exercise_count = 0
 
 
-with open('T:/Smart_Gym_Project/realtimepose/realtimeposture/templates/gifs.json', 'r') as f:
+with open('D:/smartgym/SmartGym-Major/realtimepose/realtimeposture/templates/gifs.json', 'r') as f:
     gif_data = json.load(f)
 @app.route('/', methods=['GET', 'POST'])
 def index():

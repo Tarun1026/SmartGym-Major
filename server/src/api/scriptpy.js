@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
     // Call the Python script with the input
     const pythonProcess = spawn('python', [
-      "T:/Smart_Gym_Project/server/py/recommendation.py",
+      "D:/smartgym/SmartGym-Major/server/py/recommendation.py",
       bmi,
       fitnessLevel,
       fitnessGoal
