@@ -6,9 +6,10 @@ import './App.css';
 import RecommendationPage from './pages/RecommendationPage';
 
 import PersonDayExercise from './pages/PersonDayExercise';
-
+import RecommendedPage from './pages/RecommendedPage'
 import Dashboard from "./pages/Dashboard"
 import ExercisePage from './pages/exercisepage';
+import ExerciseScreen from './pages/ExerciseScreen';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard/>} />
-        <Route path="/recommend" element={<RecommendationPage />} />
+        <Route path="/recommend" element={<RecommendationPage/>} />
         <Route path="/get-recommend" element={<RecommendedPage/>}/>
 
         <Route path="/person-exercise" element={<PersonDayExercise />} />

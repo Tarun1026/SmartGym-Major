@@ -56,7 +56,11 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
+.btn-align{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 

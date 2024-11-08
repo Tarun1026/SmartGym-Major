@@ -31,7 +31,9 @@ const Exercise = () => {
            <List image={absIntermediate} name="Abdominal Crunches" count="x10" />
            <List image={absIntermediate} name="Abdominal Crunches" count="x10" />
         </div>
-        <button className='button' onClick={handleStartExercise} > Start</button>
+        <div className='btn-align' >
+          <button className='button' onClick={handleStartExercise} > Start</button>
+        </div>
       </div>
     </div>
   );
