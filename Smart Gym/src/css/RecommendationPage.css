@@ -86,5 +86,5 @@ label {
 }
 
 .submit-button:hover {
-    background-color: #45a049; /* Slightly darker green on hover */
+    font-size: 20px;
 }

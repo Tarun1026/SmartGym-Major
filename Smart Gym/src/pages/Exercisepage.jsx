@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import {  useLocation } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import "../css/ExercisePage.css";
 import List from '../components/List';
 import absIntermediate from '../assets/intermediate/abs.jpg';
@@ -8,10 +8,11 @@ import absIntermediate from '../assets/intermediate/abs.jpg';
 const Exercise = () => {
   
   const location = useLocation();
+  const navigate=useNavigate();
   const image = location.state?.image;
   console.log(image)
-  const handleStartExercise = async (exercise) => {
-    
+  const handleStartExercise = () => {
+    navigate("/exerciseScreen")
   };
 
   
@@ -30,7 +31,7 @@ const Exercise = () => {
            <List image={absIntermediate} name="Abdominal Crunches" count="x10" />
            <List image={absIntermediate} name="Abdominal Crunches" count="x10" />
         </div>
-        <button className='button' > Start</button>
+        <button className='button' onClick={handleStartExercise} > Start</button>
       </div>
     </div>
   );
