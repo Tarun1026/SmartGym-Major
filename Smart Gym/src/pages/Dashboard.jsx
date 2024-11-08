@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import LeftSection from '../components/LeftSection';
 import RightSection from '../components/RightSection';
 import { useNavigate } from 'react-router-dom';
-
+// const navigate=useNavigate();
 const Dashboard = () => {
   return (
     <>

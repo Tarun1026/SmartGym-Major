@@ -65,7 +65,7 @@ const loginUser=asyncHandler(async(req,res)=>{
    if(!user){
       throw new ApiError(404,"User not found")
    }
-
+console.log("checking password");
    const passwordCheck=await  user.isPasswordCorrect(password)
    if (!passwordCheck){
       throw new ApiError(401,"Password is wrong")
@@ -86,7 +86,7 @@ const loginUser=asyncHandler(async(req,res)=>{
       httpOnly:true,
       secure:true
    }
-
+  console.log("user find");
    return res
    .status(200)
    .cookie("accessToken",accessToken,options)
@@ -178,6 +178,15 @@ const refreshAccessToken=asyncHandler(async(req,res)=>{
    }
 })
 
+const exerciseRecommendation = asyncHandler(async (req, res) => {
+ 
+   const user = await User.findById(req.user._id);
+   if (!user) {
+       res.status(404);
+       throw new Error('User not found');
+   }
+   res.status(200).json(user.exerciseRecommendation);
+});
 const updateRecommendExercises=asyncHandler(async(req,res)=>{
    
    const {result}=req.body
@@ -212,4 +221,5 @@ export {userRegister,
        logOutUser,
        generateAccessAndRefreshToken,
        refreshAccessToken,
+       exerciseRecommendation,
        updateRecommendExercises}
