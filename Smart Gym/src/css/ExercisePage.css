@@ -5,70 +5,63 @@
   justify-content: space-around;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to bottom right, #f7b733, #fc4a1a); /* Inspirational background */
+  width: 100vw;
+
 }
 
-.exercise {
+.exercise-list {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  width: 80%; /* Makes the exercise container horizontally bigger */
+  flex-direction: column;
+  border-radius: 30px;
+  height: 85%;
+  width: 50%; 
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-  margin: 10px 0;
+  border: 2px solid black;
+  object-fit: contain;
+  overflow: hidden;
+}
+.imageCont{
+  height: 25vh;
+  width: 50vw;
+  overflow: hidden;
+}
+.img{
+  width: 50vw;
+  object-fit: fill;
+  height: 20vh;
+
 }
 
-.exercise label {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
+.list{
+  border-radius: 30px;
+  margin: 20px;
+  height: 50vh;
+  border: 2px solid black;
+  overflow-y: scroll;
 }
 
-.start-button {
-  background-color: #28a745;
+
+
+.button {
+  background-color: rgb(8 144 255);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 20px;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-bottom: 2vh;
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
-.start-button:hover {
-  background-color: #218838;
-}
-
-.reset-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 18px;
-  cursor: pointer;
-  margin-left: 10px; /* Add some spacing between buttons */
-  transition: background-color 0.3s ease;
-}
-
-.reset-button:hover {
-  background-color: #0056b3;
-}
-
-.button-group {
+.btn-align{
   display: flex;
-  align-items: center; /* Center the items vertically */
-  margin-left: 10px; /* Space from the exercise label */
+  justify-content: center;
+  align-items: center;
 }
 
-.done {
-  background-color: #28a745; /* Same as start button */
-  color: white; /* Text color */
-  border-radius: 8px; /* Rounded corners */
-  padding: 10px 20px; /* Padding for a button-like appearance */
-  font-size: 18px; /* Font size */
-  font-weight: bold; /* Make it bold */
-  margin-right: 10px; /* Spacing to the right for reset button */
-}
+
+
+
