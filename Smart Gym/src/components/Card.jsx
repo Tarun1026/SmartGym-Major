@@ -6,8 +6,7 @@ import { useNavigate} from 'react-router-dom';
 export default function Card({ title, exerciseCount, time, image}) {
   const navigate=useNavigate();
   const onClick = ()=>{
-    console.log("clicked card");
-    navigate("/exercise",  { state: { image } });
+    navigate("/exercise",  { state: {title, image} });
   }
   return (
 
