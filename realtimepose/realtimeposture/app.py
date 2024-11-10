@@ -58,7 +58,16 @@ def get_exercise():
         return jsonify({'exercise': selected_exercise, 'count': exercise_count, 'gifUrl': gif_url})
     else:
         return jsonify({'error': 'No exercise selected'}), 400
-
+@app.route('/get_pushup_count', methods=['GET'])
+def get_pushup_count():
+    current_pushup_count = video_stream.get_pushup_count()  # Get the current count
+    print("Current pushup count:", current_pushup_count)
+    return jsonify({"count": current_pushup_count})
+@app.route('/get_bicep_count', methods=['GET'])
+def get_bicep_count():
+    current_bicep_count = video_stream.get_bicep_count()  # Get the current count
+    print("Current bicep count:", current_bicep_count)
+    return jsonify({"count": current_bicep_count})
 @app.route('/video_feed')
 def video_feed():
     return video_stream.stream()
