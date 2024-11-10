@@ -36,6 +36,17 @@ class VideoStream:
         elif choice == 'WarriorPose':
             self.classifier = WarriorClassifier(count)
 
+    def get_pushup_count(self):
+    # Ensure the classifier exists and is of PushupClassifier type
+        if isinstance(self.classifier, PushupClassifier):
+                # print("here ",self.classifier.pushup_count)
+                return self.classifier.pushup_count
+        return 0  # Default if no pushup classifier 
+    def get_bicep_count(self):
+    # Ensure the classifier exists and is of PushupClassifier type
+        if isinstance(self.classifier, BicepClassifier):
+                return self.classifier.bicep_count
+        return 0  # Default if no pushup classifier 
     def stream(self):
         def generate_frames():
             while True:
