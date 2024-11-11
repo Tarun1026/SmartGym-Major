@@ -1,4 +1,3 @@
-
 from flask import Flask, json, render_template, request, Response, jsonify
 from video_stream import VideoStream
 from flask_cors import CORS
@@ -11,7 +10,7 @@ selected_exercise = None
 exercise_count = 0
 
 
-with open('D:/smartgym/SmartGym-Major/realtimepose/realtimeposture/templates/gifs.json', 'r') as f:
+with open('T:/SMART_GYM_PROJECT/realtimepose/realtimeposture/templates/gifs.json', 'r') as f:
     gif_data = json.load(f)
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -68,6 +67,21 @@ def get_bicep_count():
     current_bicep_count = video_stream.get_bicep_count()  # Get the current count
     print("Current bicep count:", current_bicep_count)
     return jsonify({"count": current_bicep_count})
+@app.route('/get_plank_count', methods=['GET'])
+def get_plank_count():
+    current_plank_count = video_stream.get_plank_count()  # Get the current count
+    print("Current plank count:", current_plank_count)
+    return jsonify({"count": current_plank_count})
+@app.route('/get_Treepose_count', methods=['GET'])
+def get_Treepose_count():
+    current_tree_count = video_stream.get_tree_count()  # Get the current count
+    print("Current tree count:", current_tree_count)
+    return jsonify({"count": current_tree_count})
+@app.route('/get_Tpose_count', methods=['GET'])
+def get_Tpose_count():
+    current_t_count = video_stream.get_t_count()  # Get the current count
+    print("Current tpose count:", current_t_count)
+    return jsonify({"count": current_t_count})
 @app.route('/video_feed')
 def video_feed():
     return video_stream.stream()

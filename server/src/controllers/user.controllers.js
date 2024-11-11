@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asynchronousHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
+import { ExerciseData } from "../models/exercisedata.model.js";
 
 const generateAccessAndRefreshToken=async(userId)=>{
   try {
@@ -189,7 +190,7 @@ const exerciseRecommendation = asyncHandler(async (req, res) => {
 });
 const updateRecommendExercises=asyncHandler(async(req,res)=>{
    
-   const {result}=req.body
+   const {result,bmi}=req.body
    console.log("body",req.body)
    console.log("id",req.user._id)
    console.log("res",result)
@@ -204,6 +205,7 @@ const updateRecommendExercises=asyncHandler(async(req,res)=>{
 
   console.log("Before update:", user.exerciseRecommendation);
   user.exerciseRecommendation = result;
+  user.bmi=bmi;
   await user.save({ validateBeforeSave: false });
   console.log("After update:", user.exerciseRecommendation);
   
@@ -216,10 +218,104 @@ const updateRecommendExercises=asyncHandler(async(req,res)=>{
       )
     )
 })
+
+const getUserDetails=asyncHandler(async(req,res)=>{
+   // console.log("req",req.user)
+   // console.log("call")
+   if (!req.user) {
+       return res.status(404).json({ message: "User not found" });
+     }
+   res.status(200)
+   .json(
+     new ApiResponse(
+       200,req.user,"Current User Fetched"
+     )
+   )
+ })
+
+ const getWorkoutSummary = asyncHandler(async (req, res) => {
+   const id = req.user._id;
+   const user = await ExerciseData.findOne({ userId: id });
+
+   if (!user) {
+      return res.status(200).json(
+         new ApiResponse(201, "No workout summary")
+      );
+   } else {
+      
+      const workoutDetails = await ExerciseData.aggregate([
+         {
+            $match: { userId: id }
+         },
+         {
+            $lookup: {
+               from: "exercisedatas",
+               localField: "userId",
+               foreignField: "userId",
+               as: "workoutSummary"
+            }
+         },
+         {
+            $project: {
+               _id: 0,
+               userId: 1,
+               workoutSummary: 1
+            }
+         }
+      ]);
+
+      // Calculate totals for calories, time, and workout count
+      const totalData = await ExerciseData.aggregate([
+         {
+             $match: { userId: id }
+         },
+         {
+             $group: {
+                 _id: "$userId",
+                 totalCaloriesBurned: { $sum: "$caloriesBurned" },
+                 totalTimeTaken: { $sum: "$timeTaken" },
+                 totalWorkouts: { $sum: "$workout" }
+             }
+         },
+         {
+             $project: {
+                 _id: 0,
+                 userId: "$_id",
+                 totalCaloriesBurned: 1,
+                 totalTimeTaken: 1,
+                 totalWorkouts: 1
+             }
+         }
+     ]);
+
+      if (totalData.length === 0 || workoutDetails.length === 0) {
+         throw new ApiError(401, "Failed fetching workout summary");
+      }
+
+      // Combine workout details and total data into a single response object
+      const responseData = {
+         userId: id,
+         workoutSummary: workoutDetails[0].workoutSummary,
+         totalCaloriesBurned: totalData[0].totalCaloriesBurned,
+         totalTimeTaken: totalData[0].totalTimeTaken,
+         totalWorkouts: totalData[0].totalWorkouts
+      };
+
+      return res.status(200).json(
+         new ApiResponse(200, responseData, "Sent workout summary")
+      );
+   }
+});
+
+
+
+
 export {userRegister,
        loginUser,
        logOutUser,
        generateAccessAndRefreshToken,
        refreshAccessToken,
        exerciseRecommendation,
-       updateRecommendExercises}
+       updateRecommendExercises,
+      getUserDetails,
+   getWorkoutSummary}

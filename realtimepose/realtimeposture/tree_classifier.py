@@ -11,7 +11,7 @@ class TreeClassifier:
         self.target_count = count  # Target seconds to hold the pose
         self.start_time = None  # To track when the pose is held correctly
         self.tree_held_seconds = 0  # Number of seconds tree pose is held
-
+        self.max_held_seconds=0
     def classify(self, landmarks, prev_state, output_image):
         label = 'Unknown Pose'
         is_tree_correct = False  # To track whether the pose is correct
@@ -37,7 +37,7 @@ class TreeClassifier:
                 self.start_time = time.time()  # Start the timer
             else:
                 self.tree_held_seconds = time.time() - self.start_time  # Calculate the time held
-                
+                self.max_held_seconds=max(self.tree_held_seconds,self.max_held_seconds)
             # Display the current time held on the screen
             cv2.putText(output_image, f'Time Held: {self.tree_held_seconds:.1f} sec', 
                         (10, 100), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)

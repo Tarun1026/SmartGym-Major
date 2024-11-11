@@ -1,68 +1,42 @@
-import React from 'react'
-import "../css/WorkoutSummary.css"
+import React, { useEffect, useState } from 'react';
+import "../css/WorkoutSummary.css";
 import SummaryList from './SummaryList';
+import axios from "axios";
+
 export default function WorkoutSummary() {
+    const [work, setWork] = useState([]);
 
-     const summaries = [
-        {
-            title: "Recommended Workout",
-            workoutTime: 15,
-            Kcal: 200,
-            // Note: You need to define a time value, for example, in seconds. 
-            // Replace `summary.time.seconds` with an actual time value for demonstration.
-            time: { seconds: Date.now() / 1000 }, // Example placeholder
-            date: new Date(Date.now()).toLocaleDateString(), // Use current date for example
-            image: "./src/assets/recom.webp"
-        },
-        {
-            title: "Recommended Workout",
-            workoutTime: 15,
-            Kcal: 200,
-            // Note: You need to define a time value, for example, in seconds. 
-            // Replace `summary.time.seconds` with an actual time value for demonstration.
-            time: { seconds: Date.now() / 1000 }, // Example placeholder
-            date: new Date(Date.now()).toLocaleDateString(), // Use current date for example
-            image: "./src/assets/recom.webp"
-        },
-        {
-            title: "Recommended Workout",
-            workoutTime: 15,
-            Kcal: 200,
-            // Note: You need to define a time value, for example, in seconds. 
-            // Replace `summary.time.seconds` with an actual time value for demonstration.
-            time: { seconds: Date.now() / 1000 }, // Example placeholder
-            date: new Date(Date.now()).toLocaleDateString(), // Use current date for example
-            image: "./src/assets/recom.webp"
-        },
-        {
-            title: "Recommended Workout",
-            workoutTime: 15,
-            Kcal: 200,
-            // Note: You need to define a time value, for example, in seconds. 
-            // Replace `summary.time.seconds` with an actual time value for demonstration.
-            time: { seconds: Date.now() / 1000 }, // Example placeholder
-            date: new Date(Date.now()).toLocaleDateString(), // Use current date for example
-            image: "./src/assets/recom.webp"
-        },
-    ];
+    const fetchWorkOutSummary = async () => {
+        try {
+            const response = await axios.get('/api/v1/users/user-workout-summary');
+            const workoutData = response.data.data.workoutSummary || [];
+            // Sort data by the latest date if date property exists
+            workoutData.sort((a, b) => new Date(b.date) - new Date(a.date)).reverse();
+            setWork(workoutData);
+        } catch (error) {
+            console.log("Error fetching workout:", error);
+        }
+    };
 
+    useEffect(() => {
+        fetchWorkOutSummary();
+    }, []);
 
-  return (
-    <div className='workoutContainer' >
-        <div className="workout-summary-container">
-                {summaries.map((summary, index) => (
+    return (
+        <div className='workoutContainer'>
+            <div className="workout-summary-container">
+                {work.map((summary, index) => (
                     <SummaryList 
-                        key={index}
-                        image={summary.image}
-                        title={summary.title}
-                        workoutTime={summary.workoutTime}
-                        kcal={summary.Kcal}
-                        time={new Date(summary.time.seconds * 1000).toLocaleTimeString()} // Use proper time format
-                        date={new Date(summary.time.seconds * 1000).toLocaleDateString()} // Use proper date format
+                        key={summary._id || index}
+                        image={summary.image || "./src/assets/recom.webp"} // Fallback image if none provided
+                        title={summary.title || "Recommended Workout"}
+                        workoutTime={Math.floor(summary.timeTaken/60)+1 || 0} // Use actual time taken
+                        kcal={summary.caloriesBurned || 0} // Use actual calories burned
+                        time={new Date(summary.createdAt ).toLocaleTimeString()} // Adjust based on actual time format
+                        date={new Date(summary.createdAt).toLocaleDateString() || new Date().toLocaleDateString()} // Fallback to current date if not provided
                     />
                 ))}
+            </div>
         </div>
-    </div>
-    
-  )
+    );
 }

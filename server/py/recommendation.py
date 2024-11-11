@@ -7,7 +7,7 @@ import sys
 import json
 
 # Load the dataset
-file_path = "D:/smartgym/SmartGym-Major/exercise_recommendation_bmi_expanded.xlsx"
+file_path = "T:/SMART_GYM_PROJECT/exercise_recommendation_bmi_expanded.xlsx"
 exercise_data = pd.read_excel(file_path)
 
 exercise_data.fillna("Unknown", inplace=True) 

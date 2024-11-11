@@ -25,23 +25,26 @@ const Exercise = () => {
     1: 'pushup',
     2: 'bicep',
     3: 'plank',
-    4: 'Treepose',
     5: 'Tpose',
+    4: 'Treepose',
     6: 'Warriorpose',
   };
 
   useEffect(() => {
-    const storedExercises = JSON.parse(localStorage.getItem('exerciseStarted'));
-    if (storedExercises) {
-      setExerciseStarted(storedExercises);
+    // Check if start time exists; if not, set it
+    if (!localStorage.getItem('exerciseStartTime')) {
+      const startTime = new Date().toISOString();
+      localStorage.setItem('exerciseStartTime', startTime);
+      localStorage.setItem('exerciseInProgress', JSON.stringify(true));
     }
+    
+    const storedExercises = JSON.parse(localStorage.getItem('exerciseStarted'));
+    if (storedExercises) setExerciseStarted(storedExercises);
 
     const storedCounts = JSON.parse(localStorage.getItem('exerciseCount'));
-    if (storedCounts) {
-      setExerciseCount(storedCounts);
-    }
+    console.log("stored",storedCounts)
+    if (storedCounts) setExerciseCount(storedCounts);
 
-    // Check if a day has passed and reset counts if needed
     const lastResetDate = localStorage.getItem('lastResetDate');
     if (lastResetDate) {
       const lastDate = new Date(lastResetDate);
@@ -49,22 +52,16 @@ const Exercise = () => {
       const oneDay = 24 * 60 * 60 * 1000;
 
       if (now - lastDate > oneDay) {
-        setExerciseCount({
+        const resetCounts = {
           pushup: 0,
           bicep: 0,
           plank: 0,
           Tpose: 0,
           Treepose: 0,
           Warriorpose: 0,
-        });
-        localStorage.setItem('exerciseCount', JSON.stringify({
-          pushup: 0,
-          bicep: 0,
-          plank: 0,
-          Tpose: 0,
-          Treepose: 0,
-          Warriorpose: 0,
-        }));
+        };
+        setExerciseCount(resetCounts);
+        localStorage.setItem('exerciseCount', JSON.stringify(resetCounts));
         localStorage.setItem('lastResetDate', now.toISOString());
       }
     } else {
@@ -74,7 +71,6 @@ const Exercise = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Find the currently started exercise
       const currentExercise = Object.keys(exerciseStarted).find(key => exerciseStarted[key]);
       if (currentExercise) {
         const exerciseName = exerciseMap[currentExercise];
@@ -93,14 +89,13 @@ const Exercise = () => {
             console.error(`Error fetching ${exerciseName} count:`, error);
           });
       }
-    }, 1000); // Poll every 1 second
+    }, 1000);
   
-    return () => clearInterval(interval); // Cleanup on component unmount
-  }, [exerciseMap, exerciseStarted]); // Remove exerciseCount dependency
-  
+    return () => clearInterval(interval);
+  }, [exerciseMap, exerciseStarted]);
+
   const handleStartExercise = async (exercise) => {
     try {
-      // Reset all exercises to not started and set the selected one to started
       setExerciseStarted((prevStarted) => {
         const updatedState = Object.keys(prevStarted).reduce((acc, key) => ({
           ...acc,
@@ -128,6 +123,24 @@ const Exercise = () => {
     });
   };
 
+  const finishClick = async () => {
+    // Get start time from local storage and calculate the duration
+    const startTime = new Date(localStorage.getItem('exerciseStartTime'));
+    const endTime = new Date();
+    const duration = Math.floor((endTime - startTime) / 1000); // Duration in seconds
+    console.log("dura",duration)
+    // Clear exercise progress in local storage
+    localStorage.setItem('exerciseInProgress', JSON.stringify(false));
+    localStorage.removeItem('exerciseStartTime');
+
+    try {
+      const storedCounts = JSON.parse(localStorage.getItem('exerciseCount'));
+      await axios.post("/api/v1/users/calorie", { storedCounts, duration });
+      console.log("Finished exercise with duration:", duration, "seconds");
+    } catch (error) {
+      console.error("Error finishing exercise:", error);
+    }
+  };
   return (
     <div className="exercise-container">
       <div className="exercise">
@@ -267,6 +280,11 @@ const Exercise = () => {
             Start
           </button>
         )}
+      </div>
+      <div>
+      <button className="finish-button" onClick={finishClick} >
+      Finish
+    </button>
       </div>
     </div>
   );

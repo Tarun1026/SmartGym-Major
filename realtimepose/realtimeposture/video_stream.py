@@ -42,6 +42,24 @@ class VideoStream:
                 # print("here ",self.classifier.pushup_count)
                 return self.classifier.pushup_count
         return 0  # Default if no pushup classifier 
+    def get_plank_count(self):
+    # Ensure the classifier exists and is of PushupClassifier type
+        if isinstance(self.classifier, PlankClassifier):
+                # print("here ",self.classifier.pushup_count)
+                return self.classifier.max_held_seconds
+        return 0  # Default if no pushup classifier 
+    def get_tree_count(self):
+    # Ensure the classifier exists and is of PushupClassifier type
+        if isinstance(self.classifier, TreeClassifier):
+                # print("here ",self.classifier.pushup_count)
+                return self.classifier.max_held_seconds
+        return 0  # Default if no pushup classifier 
+    def get_t_count(self):
+    # Ensure the classifier exists and is of PushupClassifier type
+        if isinstance(self.classifier, TposeClassifier):
+                # print("here ",self.classifier.pushup_count)
+                return self.classifier.max_held_seconds
+        return 0  # Default if no pushup classifier 
     def get_bicep_count(self):
     # Ensure the classifier exists and is of PushupClassifier type
         if isinstance(self.classifier, BicepClassifier):

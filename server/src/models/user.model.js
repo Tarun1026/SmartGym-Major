@@ -27,10 +27,10 @@ const userSchema=new Schema({
         type: Object,
         default: {}
     },
-    // accessToken:{
-    //     type:String,
-        
-    // }
+    bmi:{
+        type:Number
+    }
+    
 
 },{timestamps:true})
 

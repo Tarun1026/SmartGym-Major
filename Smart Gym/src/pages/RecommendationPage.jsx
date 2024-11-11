@@ -38,7 +38,7 @@ function RecommendationPage() {
 
       const result = await response.json();
       console.log("Recommended Plan:", result);
-      await axios.post('/api/v1/users/recommend-exercise', {result})
+      await axios.post('/api/v1/users/recommend-exercise', {result,bmi})
       .then((res) => console.log("Response:", res))
       .catch((err) => console.log("Error:", err));
       

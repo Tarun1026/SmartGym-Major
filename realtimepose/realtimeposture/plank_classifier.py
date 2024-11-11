@@ -9,7 +9,8 @@ class PlankClassifier:
         self.prev_state = None
         self.target_count = count  # Target seconds to hold the pose
         self.start_time = None  # To track when the pose is held correctly
-        self.plank_held_seconds = 0  
+        self.plank_held_seconds = 0
+        self.max_held_seconds=0
 
     def classify(self, landmarks, prev_state, output_image):
         label = 'Unknown Pose'
@@ -54,7 +55,7 @@ class PlankClassifier:
                 self.start_time = time.time()  # Start the timer
             else:
                 self.plank_held_seconds = time.time() - self.start_time  # Calculate the time held
-                
+                self.max_held_seconds=max(self.max_held_seconds,self.plank_held_seconds)
             # Display the current time held on the screen
             cv2.putText(output_image, f'Time Held: {self.plank_held_seconds:.1f} sec', 
                         (10, 100), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)

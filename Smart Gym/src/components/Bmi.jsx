@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import GaugeChart from 'react-gauge-chart'
-
+import axios from "axios"
 export default function Bmi() {
     const [bmi, setBmi] = useState(0);
     const [category, setCategory] = useState("");
     const [categoryColor, setCategoryColor] = useState("black");
+
+    const fetchWorkOutSummary=async()=>{
+        try {
+            const response=await axios.get('/api/v1/users/current-user-details')
+            console.log("BMI",response.data.data)
+            setBmi(response.data.data.bmi/10)
+        } catch (error) {
+            console.log("BMI progress",error)
+        }
+    }
     useEffect(()=>{
-        setBmi(16)
+        fetchWorkOutSummary()
     },[])
+    // useEffect(()=>{
+    //     setBmi(16)
+    // },[])
     useEffect(() => {
         if (bmi >= 16 && bmi <= 18.5) {
             setCategory("Underweight");
