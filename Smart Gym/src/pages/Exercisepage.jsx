@@ -12,6 +12,8 @@ const Exercise = () => {
     6: false,
   });
 
+  
+
   const [exerciseCount, setExerciseCount] = useState({
     pushup: 0,
     bicep: 0,

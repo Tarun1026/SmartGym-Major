@@ -23,8 +23,30 @@
   font-weight: bold;
   color: #333;
 }
+<<<<<<< HEAD
 .start-button {
   background-color: #28a745;
+=======
+.img{
+  width: 50vw;
+  object-fit: fill;
+  height: 25vh;
+
+}
+
+.list{
+  border-radius: 30px;
+  margin: 20px;
+  height: 50vh;
+  border: 2px solid black;
+  overflow-y: scroll;
+}
+
+
+
+.button {
+  background-color: rgb(8 144 255);
+>>>>>>> da09ff981bcbec44a8202179a70dc54a2dc75a52
   color: white;
   border: none;
   border-radius: 8px;

@@ -1,5 +1,5 @@
 const calorieData = {
-    "pushup": 1,
+    "pushup": 1.5,
     "plank": 2,
     "WarriorPose": 3,
     "Tpose": 4,
