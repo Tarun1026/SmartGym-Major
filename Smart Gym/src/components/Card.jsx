@@ -6,7 +6,14 @@ import { useNavigate} from 'react-router-dom';
 export default function Card({ title, exerciseCount, time, image}) {
   const navigate=useNavigate();
   const onClick = ()=>{
-    navigate("/exercise",  { state: {title, image} });
+    // navigate("/exercise2",  { state: {title, image} });
+    console.log("ti",title)
+    if(title=="Recommended Workouts"){
+      navigate("/exercise",  { state: {title, image} });
+    }
+    else{
+      navigate("/exercise2",  { state: {title, image} });
+    }
   }
   return (
 

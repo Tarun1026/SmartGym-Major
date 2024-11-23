@@ -41,8 +41,7 @@ function RecommendationPage() {
       await axios.post('/api/v1/users/recommend-exercise', {result,bmi})
       .then((res) => console.log("Response:", res))
       .catch((err) => console.log("Error:", err));
-      
-      // navigate('/dashboard')
+      navigate('/dashboard')
     } catch (error) {
       console.error("Error fetching recommendation:", error);
     }

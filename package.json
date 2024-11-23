@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "react-toastify": "^10.0.6",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1"
   }

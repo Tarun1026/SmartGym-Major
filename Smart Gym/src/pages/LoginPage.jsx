@@ -1,27 +1,37 @@
-import  { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import "../css/LoginPage.css"; // Create and link a CSS file for styling
 
 import backGroundImage from "../assets/BodyBuilderImage.jpg"
 import axios from 'axios';
-const LoginPage=() =>{
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-  const[email,setEmail]=useState()
-  const [password,setPassword]=useState()
-  const navigate=useNavigate()
-  const handleSubmit=async(e)=>{
-    e.preventDefault()
-    await axios.post("/api/v1/users/logins",{email,password})
-    .then((res)=>console.log(res))
-    navigate('/recommend')
-    .catch(err=>console.log(err))
-  }
+const LoginPage = () => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("/api/v1/users/logins", { email, password });
+      console.log(res);
+      toast.success("Login successful");
+      navigate('/recommend');
+    } catch (err) {
+      console.log(err);
+      toast.error("Login failed");
+    }
+  };
+
   return (
     <div className='container'>
+      <ToastContainer /> {/* Toast container to display messages */}
       <div className='leftDiv'>
         <div>
-        <img src={backGroundImage} className='bgImage' alt="Example" />
+          <img src={backGroundImage} className='bgImage' alt="Example" />
         </div>
       </div>
       <div className='rightDiv'>
@@ -30,18 +40,20 @@ const LoginPage=() =>{
           <div className='heading'>Email</div>
           <div>
             <input 
-            className='inputField' 
-            type="email" 
-            placeholder="Enter your email"
-            onChange={(e)=>setEmail(e.target.value)}
+              className='inputField' 
+              type="email" 
+              placeholder="Enter your email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className='heading'>Password</div>
           <div>
-            <input className='inputField' type="password" 
-            placeholder="Enter your password"
-            onChange={(e)=>setPassword(e.target.value)}
-             />
+            <input 
+              className='inputField' 
+              type="password" 
+              placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
           <div className="rememberMe">
             <input type="checkbox" id="rememberMe" />

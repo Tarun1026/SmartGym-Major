@@ -1,9 +1,10 @@
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import "../css/Recommended.css";
 
 const RecommendedPage = () => {
-    const [recommendations, setRecommendations] = useState({});
+  const [recommendations, setRecommendations] = useState([]);
+  const [uniqueExercises, setUniqueExercises] = useState([]);
   const fetchRecommendation = async () => {
     try {
       const response = await axios.get('/api/v1/users/get-recommendations');
@@ -13,37 +14,50 @@ const RecommendedPage = () => {
       console.error('Error fetching recommendation:', error);
     }
   };
+
   useEffect(() => {
     fetchRecommendation();
   }, []);
 
+  useEffect(() => {
+    const exerciseSet = new Set();
+    const uniqueExerciseArray = [];
+    Object.keys(recommendations).forEach(week => {
+      recommendations[week].forEach(dayExercises => {
+        dayExercises.split(',').forEach(exercise => {
+          const { name, count } = splitExercise(exercise);
+
+          if (!exerciseSet.has(name)) {
+            exerciseSet.add(name);
+            uniqueExerciseArray.push({ name, count });
+          }
+        });
+      });
+    });
+
+    setUniqueExercises(uniqueExerciseArray);
+  }, [recommendations]);
+  console.log(JSON.stringify(uniqueExercises));
   const splitExercise = (exercise) => {
-    const [exerciseName, exerciseCount] = exercise.split('(');
-    return { name: exerciseName.trim(), count: exerciseCount.replace(')', '').trim() };
+    const parts = exercise.split('(');
+    const exerciseName = parts[0] ? parts[0].trim() : ''; // Extract the name
+    const exerciseCount = parts[1] ? parts[1].replace(')', '').trim() : ''; // Safely extract and format count
+    return { name: exerciseName, count: exerciseCount };
   };
 
   return (
-    <div>
-      <h1>Exercises To Do</h1>
-      {Object.keys(recommendations).map((week, weekIndex) => (
-        <div key={weekIndex} className="week-container">
-          <h2>{week}</h2>
-          {recommendations[week].map((dayExercises, dayIndex) => (
-            <div key={dayIndex} className="day-container">
-              <h3>Day {dayIndex + 1}</h3>
-              {dayExercises.split(',').map((exercise, exerciseIndex) => {
-                const { name, count } = splitExercise(exercise);
-                return (
-                  <div key={exerciseIndex} className="exercise-container">
-                    <span className="exercise-name">{name}</span>
-                    <span className="exercise-count">{count}</span>
-                  </div>
-                );
-              })}
-            </div>
-          ))}
+    <div className='cont'>
+      <h1>Recommended Exercise</h1>
+      
+      {uniqueExercises.map((exercise, index) => (
+      <div key={index} className="exercise-container">
+        <div className="exercise-details">
+          <span className="exercise-name">{exercise.name}</span>
+          <span className="exercise-count">({exercise.count})</span>
         </div>
-      ))}
+        <button className="start-button">Start</button>
+      </div>
+))}
     </div>
   );
 };

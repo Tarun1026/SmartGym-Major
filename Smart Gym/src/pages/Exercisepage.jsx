@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import "../css/ExercisePage.css";
 
 const Exercise = () => {
@@ -31,7 +32,7 @@ const Exercise = () => {
     4: 'Treepose',
     6: 'Warriorpose',
   };
-
+  const navigate=useNavigate()
   useEffect(() => {
     // Check if start time exists; if not, set it
     if (!localStorage.getItem('exerciseStartTime')) {
@@ -107,7 +108,7 @@ const Exercise = () => {
         return updatedState;
       });
   
-      await axios.post('http://127.0.0.1:8000/', { choice: exercise, count: 2 });
+      await axios.post('http://127.0.0.1:8000/', { choice: exercise, count: 13 });
       window.location.href = 'http://127.0.0.1:8000';
     } catch (error) {
       console.error('Error starting exercise:', error);
@@ -126,23 +127,26 @@ const Exercise = () => {
   };
 
   const finishClick = async () => {
-    // Get start time from local storage and calculate the duration
-    const startTime = new Date(localStorage.getItem('exerciseStartTime'));
-    const endTime = new Date();
-    const duration = Math.floor((endTime - startTime) / 1000); // Duration in seconds
-    console.log("dura",duration)
-    // Clear exercise progress in local storage
-    localStorage.setItem('exerciseInProgress', JSON.stringify(false));
-    localStorage.removeItem('exerciseStartTime');
-
     try {
+      const startTime = new Date(localStorage.getItem('exerciseStartTime'));
+      const endTime = new Date();
+      const duration = Math.floor((endTime - startTime) / 1000);
+  
+      localStorage.setItem('exerciseInProgress', JSON.stringify(false));
+      localStorage.removeItem('exerciseStartTime');
+  
       const storedCounts = JSON.parse(localStorage.getItem('exerciseCount'));
       await axios.post("/api/v1/users/calorie", { storedCounts, duration });
-      console.log("Finished exercise with duration:", duration, "seconds");
+      console.log("Finished exeereffr exercise with duration:Z", duration, "seconds");
+      
+      // Verify if this line is reached
+      console.log("Navigating to /dashboard");
+      navigate('/dashboard');
     } catch (error) {
       console.error("Error finishing exercise:", error);
     }
   };
+  
   return (
     <div className="exercise-container">
       <div className="exercise">

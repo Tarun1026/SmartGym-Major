@@ -1,32 +1,60 @@
-.week-container {
-    margin-bottom: 20px;
-    height: 10vh;
-  }
-  
-  .day-container {
-    margin-bottom: 15px;
-  }
-  
-  .day-container h3 {
-    color: #555;
-    font-size: 1.2em;
-  }
-  
-  .exercise-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .exercise-name {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .exercise-count {
-    font-weight: bold;
-    color: #007BFF;
-  }
-  
+.cont {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.exercise-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px; /* Fixed height for a compact look */
+  margin-bottom: 10px;
+  padding: 10px 15px; /* Adjusted padding */
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.exercise-container:hover {
+  background-color: #f0f4f8; /* Light blue-gray for hover effect */
+  transform: scale(1.01); /* Slight scaling for interactivity */
+}
+
+.exercise-details {
+  display: flex;
+  align-items: center;
+}
+
+.exercise-name {
+  font-weight: bold;
+  color: #333;
+  margin-right: 8px;
+  font-size: 1em;
+}
+
+.exercise-count {
+  color: #007bff;
+  font-size: 0.9em;
+}
+
+.start-button {
+  padding: 6px 18px;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 2px 4px rgba(40, 167, 69, 0.4);
+}
+
+.start-button:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.5);
+}

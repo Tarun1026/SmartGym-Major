@@ -1,0 +1,97 @@
+.exercise-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 120vh;
+  padding: 20px;
+  background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+  font-family: Arial, sans-serif;
+  color: #f3f3f3;
+}
+
+.exercise {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  width: 90%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  margin: 15px 0;
+  transition: transform 0.3s;
+}
+
+.exercise:hover {
+  transform: translateY(-5px);
+}
+
+.exercise-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.exercise label {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.start-button, .reset-button, .finish-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+.start-button:hover, .finish-button:hover {
+  background-color: #218838;
+}
+
+.reset-button {
+  background-color: #ff6347;
+}
+
+.reset-button:hover {
+  background-color: #e53e3e;
+}
+
+.done {
+  background-color: #28a745;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+/* Styling for exercise images */
+.exercise-image-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Finish button styling */
+.finish-button {
+  background-color: #ffa500;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.finish-button:hover {
+  background-color: #ff8c00;
+}
