@@ -1,6 +1,8 @@
 import  { useState } from "react";
 import "../css/RecommendationPage.css";
 import { useNavigate } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios"
 function RecommendationPage() {
   const [gender, setGender] = useState("");
@@ -27,7 +29,6 @@ function RecommendationPage() {
     console.log(fitnessGoal,fitnessLevel,bmi);
     e.preventDefault();
     try {
-      
       const response = await fetch("http://localhost:5000/api/scriptpy", {
         method: "POST",
         headers: {
@@ -39,16 +40,29 @@ function RecommendationPage() {
       const result = await response.json();
       console.log("Recommended Plan:", result);
       await axios.post('/api/v1/users/recommend-exercise', {result,bmi})
-      .then((res) => console.log("Response:", res))
-      .catch((err) => console.log("Error:", err));
-      navigate('/dashboard')
-    } catch (error) {
+      toast.success(' Plan Generated Sucessfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+        setTimeout(() => {
+          navigate('/dashboard')
+        }, 3000);
+    }
+     catch (error) {
+      toast.error("Something went wrong");
       console.error("Error fetching recommendation:", error);
     }
   };
 
   return (
     <div className="container1">
+      <ToastContainer />
       <div className="form">
         <h2 className="heading">Get Started</h2>
         <div className="description">

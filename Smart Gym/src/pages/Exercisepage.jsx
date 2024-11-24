@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "../css/ExercisePage.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Exercise = () => {
   const [exerciseStarted, setExerciseStarted] = useState({
@@ -139,16 +141,30 @@ const Exercise = () => {
       await axios.post("/api/v1/users/calorie", { storedCounts, duration });
       console.log("Finished exeereffr exercise with duration:Z", duration, "seconds");
       
-      // Verify if this line is reached
-      console.log("Navigating to /dashboard");
-      navigate('/dashboard');
+      toast.success(' Progress Updated Sucessfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 3000);
+
+      
     } catch (error) {
+      toast.error("Error finishing exercises");
       console.error("Error finishing exercise:", error);
     }
   };
   
   return (
     <div className="exercise-container">
+      <ToastContainer />
       <div className="exercise">
         <label>Pushup</label>
         {exerciseStarted[1] ? (

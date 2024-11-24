@@ -1,31 +1,84 @@
-import  { useState } from "react";
-import "../css/SignupPage.css";
-import backGroundImage from "../assets/BodyBuilderImage.jpg";
-import { Link } from "react-router-dom";
-import axios from "axios"
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import "../css/LoginPage.css"; // Create and link a CSS file for styling
+
+import backGroundImage from "../assets/BodyBuilderImage.jpg"
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const SignupPage=() =>{
 
   const [fullName,setFullName]=useState()
   const[email,setEmail]=useState()
   const [password,setPassword]=useState()
   const[confirmPassword,setConfirmPassword]=useState()
+  const [emailError, setEmailError] = useState("");
   const navigate=useNavigate()
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+    const commonDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"];
+  
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email");
+      return false;
+    } else {
+      const emailDomain = email.split("@")[1];
+      if (!commonDomains.includes(emailDomain)) {
+        setEmailError(`Please enter a valid email`);
+        return false;
+      }
+      setEmailError(""); 
+      return true;
+    }
+  };
   const handleSubmit=async(e)=>{
     e.preventDefault()
+    const isEmailValid = validateEmail(email);
+    if (!isEmailValid) return;
     if (password==confirmPassword) {
-      await axios.post("/api/v1/users/register",{fullName,email,password,confirmPassword})
-      .then((result)=>console.log(result))
-       navigate('/login')
-      .catch(err=>console.log(err))
+      const res= await axios.post("/api/v1/users/register",{fullName,email,password,confirmPassword})
+      if(res.data.success){
+        toast.success(' Registered Sucessfully!', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+          setTimeout(() => {
+             navigate('/login')
+          }, 3000);
+          
+      }else{
+        setMsg(true)
+        toast.error(' User Already Exists! Please Log In ', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+        }
     } else {
-      console.log("create and confirm password should be same")
+      toast.error("Passwords must be same");
     }
   }
   return (
     <div className="container">
+      <ToastContainer />
       <div className="leftDiv">
-        <div>
+        <div className='leftDiv_Img'>
           <img src={backGroundImage} className="bgImage" alt="Example" />
         </div>
       </div>
@@ -48,20 +101,13 @@ const SignupPage=() =>{
               className="inputField"
               type="email"
               placeholder="Enter your Email"
-              onChange={(e)=>setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                validateEmail(e.target.value); // Validate on change
+              }}
             />
+            {emailError && <div className="errorText">{emailError}</div>} {/* Error message */}
           </div>
-          {/* <div className="heading">Gender</div>
-          <div>
-            <select className="inputFieldSelect">
-              <option value="" disabled selected>
-                Select Gender
-              </option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div> */}
           
           <div className="heading">Create Password</div>
           <div>
