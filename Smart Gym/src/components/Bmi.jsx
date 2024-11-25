@@ -22,7 +22,7 @@ export default function Bmi() {
     //     setBmi(16)
     // },[])
     useEffect(() => {
-        if (bmi >= 16 && bmi <= 18.5) {
+        if (bmi >= 15 && bmi <= 18.5) {
             setCategory("Underweight");
             setCategoryColor("#d3d300");
         } else if (bmi > 18.5 && bmi < 25) {
@@ -36,7 +36,7 @@ export default function Bmi() {
 
     const gageCalc = (bmi) => {
         let result = 0;
-        if (bmi >= 16 && bmi <= 18.5) {
+        if (bmi >= 15 && bmi <= 18.5) {
             result = getPercentage(bmi, 16, 18.5, 0);
         } else if (bmi > 18.5 && bmi < 25) {
             result = getPercentage(bmi, 18.5, 25, 0.33);

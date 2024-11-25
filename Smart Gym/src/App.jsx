@@ -24,9 +24,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/recommend" element={<RecommendationPage/>} />
         <Route path="/get-recommend" element={<RecommendedPage/>}/>
-
         <Route path="/person-exercise" element={<PersonDayExercise />} />
-        
         <Route path="/sample" element={<Sample />} />
         <Route path="/exercise" element={<Exercise />} />
         <Route path="/exercise2" element={<Exercise2 />} />

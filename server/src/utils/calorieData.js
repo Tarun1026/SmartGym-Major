@@ -1,10 +1,10 @@
 const calorieData = {
     "pushup": 1.5,
-    "plank": 2,
-    "WarriorPose": 3,
-    "Tpose": 4,
-    "Treepose": 5,
-    "bicep": 6
+    "plank": 1.5,
+    "WarriorPose": 1,
+    "Tpose": 0.4,
+    "Treepose": 0.5,
+    "bicep": 2
    
   };
   

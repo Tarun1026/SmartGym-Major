@@ -5,105 +5,112 @@
   justify-content: space-around;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to bottom right, #f7b733, #fc4a1a); /* Inspirational background */
+  background: linear-gradient(135deg, #1e3c72, #2a5298); /* Elegant gradient background */
+  color: #ffffff; /* White text for better readability */
+  font-family: 'Arial', sans-serif;
 }
+
 .exercise {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.9); /* Transparent white background */
+  border-radius: 15px;
   padding: 20px;
-  width: 80%; /* Makes the exercise container horizontally bigger */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-  margin: 10px 0;
+  width: 75%; /* Better width for spacing */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  margin: 15px 0;
 }
+
 .exercise label {
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333; /* Dark gray text for contrast */
+}
+
+/* Button Styling */
+.start-button, .reset-button, .finish-button {
+  padding: 12px 24px;
+  font-size: 16px;
   font-weight: bold;
-  color: #333;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-<<<<<<< HEAD
+
+/* Start Button */
 .start-button {
-  background-color: #28a745;
-=======
-.img{
-  width: 50vw;
-  object-fit: fill;
-  height: 25vh;
-
-}
-
-.list{
-  border-radius: 30px;
-  margin: 20px;
-  height: 50vh;
-  border: 2px solid black;
-  overflow-y: scroll;
-}
-
-
-
-.button {
-  background-color: rgb(8 144 255);
->>>>>>> da09ff981bcbec44a8202179a70dc54a2dc75a52
+  background-color: #4caf50; /* Green */
   color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
+
 .start-button:hover {
-  background-color: #218838;
+  background-color: #45a049; /* Darker green */
 }
+
+/* Reset Button */
 .reset-button {
-  background-color: #007bff;
+  background-color: #007bff; /* Blue */
   color: white;
-  border: none;
+  margin-left: 10px;
+}
+
+.reset-button:hover {
+  background-color: #0056b3; /* Darker blue */
+}
+
+/* Done Button */
+.done {
+  background-color: #28a745; /* Green */
+  color: white;
   border-radius: 8px;
   padding: 10px 20px;
   font-size: 18px;
-  cursor: pointer;
-  margin-left: 10px; /* Add some spacing between buttons */
-  transition: background-color 0.3s ease;
-}
-.reset-button:hover {
-  background-color: #0056b3;
-}
-.button-group {
-  display: flex;
-  align-items: center; /* Center the items vertically */
-  margin-left: 10px; /* Space from the exercise label */
-}
-.done {
-  background-color: #28a745; /* Same as start button */
-  color: white; /* Text color */
-  border-radius: 8px; /* Rounded corners */
-  padding: 10px 20px; /* Padding for a button-like appearance */
-  font-size: 18px; /* Font size */
-  font-weight: bold; /* Make it bold */
-  margin-right: 10px; /* Spacing to the right for reset button */
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* FinishButton.css */
-
+/* Finish Button */
 .finish-button {
-  background-color: #061939; /* Green background */
-  color: white; /* White text */
-  font-size: 16px; /* Font size */
-  padding: 10px 20px; /* Padding */
-  border: none; /* Remove borders */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease;
+  background-color: #ff5722; /* Vibrant orange */
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .finish-button:hover {
-  background-color: #6393dc; /* Darker green on hover */
+  background-color: #e64a19; /* Darker orange */
 }
 
-.finish-button:active {
-  background-color: #6ea4ea; /* Even darker on click */
+/* Hover Effects */
+.start-button:hover, .reset-button:hover, .finish-button:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+/* Adjustments for mobile responsiveness */
+@media (max-width: 768px) {
+  .exercise {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+  }
+
+  .button-group {
+    margin-top: 10px;
+  }
 }
